@@ -1,0 +1,2 @@
+class BadFixtureError(Exception):
+    pass
