@@ -64,31 +64,35 @@ class Graph(object):
         self._nodes = {}
 
     def add_node(self, node):
-        self._nodes.setdefault(node, set())
+        self._nodes.setdefault(node, list())
 
     def add_dependency(self, node, dependency):
         if node not in self._nodes:
             raise KeyError('Node %s not set', str(node))
         if dependency not in self._nodes:
             raise KeyError('Dependency %s not set', str(dependency))
-        self._nodes[node].add(dependency)
+        self._nodes[node].append(dependency)
 
     def __iter__(self):
         resolved_nodes = []
         for node in self._nodes.items():
             if node in resolved_nodes:
                 continue
-            for resolved in self.resolve_node(node, resolved_nodes):
+            for resolved in self.resolve_node(node):
                 resolved_nodes.append(resolved)
                 yield resolved
 
-    def resolve_node(self, node, resolved, seen=None):
-        seen = seen or []
+    def resolve_node(self, node, resolved=None, seen=None):
+        if seen is None:
+            seen = []
+        if resolved is None:
+            resolved = []
         seen.append(node)
         for dependency in self._nodes[node]:
             if dependency in resolved:
                 continue
             if dependency in seen:
                 raise Exception('Circular dependency %s > %s', str(node), str(dependency))
-            yield self.resolve_node(dependency, resolved, seen)
-        yield node
+            self.resolve_node(dependency, resolved, seen)
+        resolved.append(node)
+        return resolved
