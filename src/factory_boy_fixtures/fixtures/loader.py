@@ -74,25 +74,26 @@ class Graph(object):
         self._nodes[node].append(dependency)
 
     def __iter__(self):
-        resolved_nodes = []
-        for node in self._nodes.items():
-            if node in resolved_nodes:
-                continue
-            for resolved in self.resolve_node(node):
-                resolved_nodes.append(resolved)
-                yield resolved
+        for resolved_node in self.resolve_node():
+            yield resolved_node
 
-    def resolve_node(self, node, resolved=None, seen=None):
+    def resolve_node(self, node=None, resolved=None, seen=None):
         if seen is None:
             seen = []
         if resolved is None:
             resolved = []
-        seen.append(node)
-        for dependency in self._nodes[node]:
+        if node is None:
+            dependencies = self._nodes.keys()
+        else:
+            dependencies = self._nodes[node]
+            seen.append(node)
+        for dependency in dependencies:
             if dependency in resolved:
                 continue
             if dependency in seen:
-                raise Exception('Circular dependency %s > %s', str(node), str(dependency))
+                raise Exception('Circular dependency %s > %s', str(node),
+                                str(dependency))
             self.resolve_node(dependency, resolved, seen)
-        resolved.append(node)
+        if node is not None:
+            resolved.append(node)
         return resolved
