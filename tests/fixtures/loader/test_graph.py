@@ -65,3 +65,11 @@ class GraphTestCase(TestCase):
             self.graph.resolve_node()
         self.assertEqual(e.exception.args[0] % e.exception.args[1:],
                          'Circular dependency c > a')
+
+    def test_subset(self):
+        """
+        Case: A sub-set of the nodes get resolved
+        Expected: Only the given nodes and their dependencies get returned
+        """
+        flat_list = self.graph.resolve_nodes(['b', 'c'])
+        self.assertEqual(flat_list, ['d', 'e', 'c', 'b'])

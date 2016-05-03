@@ -1,5 +1,4 @@
 import os
-import copy
 
 from importlib import import_module
 
@@ -63,6 +62,10 @@ class Graph(object):
     def __init__(self):
         self._nodes = {}
 
+    @property
+    def nodes(self):
+        return self._nodes
+
     def add_node(self, node):
         self._nodes.setdefault(node, list())
 
@@ -77,7 +80,29 @@ class Graph(object):
         for resolved_node in self.resolve_node():
             yield resolved_node
 
+    def resolve_nodes(self, nodes):
+        """
+        Resolve a given set of nodes.
+
+        Dependencies of the nodes, even if they are not in the given list will
+        also be resolved!
+
+        :param list nodes: List of nodes to be resolved
+        :return: A list of resolved nodes
+        """
+        if not nodes:
+            return []
+        resolved = []
+        for node in nodes:
+            if node in resolved:
+                continue
+            self.resolve_node(node, resolved)
+        return resolved
+
     def resolve_node(self, node=None, resolved=None, seen=None):
+        """
+        Resolve a single node or all when node is omitted.
+        """
         if seen is None:
             seen = []
         if resolved is None:
