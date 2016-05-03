@@ -1,4 +1,0 @@
-
-
-class Fixture(object):
-    pass
