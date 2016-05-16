@@ -1,5 +1,7 @@
-from factory_boy_fixtures.fixtures.exceptions import MultipleFixturesFound, \
+from factory_boy_fixtures.fixtures.exceptions import (
+    MultipleFixturesFound,
     FixtureNotFound
+)
 from factory_boy_fixtures.fixtures.loader import Loader, Graph
 
 
@@ -51,7 +53,7 @@ class LoadFixtureRunner(object):
         :param str fixture_prefix: first part of the fixture name
         :return: list of found fixtures.
         """
-        app_nodes = self.get_app_nodes(app_label)
+        app_nodes = self.get_app_nodes(app_label=app_label)
         nodes = [node for node in app_nodes if node[1].startswith(fixture_prefix)]
 
         if len(nodes) > 1:
@@ -65,6 +67,13 @@ class LoadFixtureRunner(object):
         return nodes
 
     def load_fixtures(self, nodes=None, progress_callback=None):
+        """Load all fixtures for given nodes.
+
+        If no nodes are given all fixtures will be loaded.
+        :param list nodes: list of nodes to be loaded.
+        :param callable progress_callback: Callback which will be called while
+                                           handling the nodes.
+        """
 
         if progress_callback and not callable(progress_callback):
             raise Exception('Callback should be callable')
