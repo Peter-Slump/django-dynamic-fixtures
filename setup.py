@@ -24,7 +24,7 @@ setup(
     ],
     tests_require=[
         'pytest-django',
-        'mock',
+        'mock==2.0.*',
     ],
     url='',
     license='MIT',
