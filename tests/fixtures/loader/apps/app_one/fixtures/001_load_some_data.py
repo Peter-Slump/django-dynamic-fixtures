@@ -1,4 +1,4 @@
-from factory_boy_fixtures.fixtures.basefixture import BaseFixture
+from dynamic_fixtures.fixtures.basefixture import BaseFixture
 
 
 class Fixture(BaseFixture):

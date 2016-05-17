@@ -1,5 +1,3 @@
-
-
 class BaseFixture(object):
 
     def __init__(self, name, app_label):

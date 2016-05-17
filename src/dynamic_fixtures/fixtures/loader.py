@@ -4,7 +4,7 @@ from importlib import import_module
 
 from django.apps import apps
 
-from factory_boy_fixtures.fixtures.exceptions import BadFixtureError
+from dynamic_fixtures.fixtures.exceptions import BadFixtureError
 
 FIXTURES_MODULE_NAME = 'fixtures'
 

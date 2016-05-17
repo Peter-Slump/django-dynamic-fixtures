@@ -1,6 +1,6 @@
 from unittest.case import TestCase
 
-from factory_boy_fixtures.fixtures.loader import Graph
+from dynamic_fixtures.fixtures.loader import Graph
 
 
 class GraphTestCase(TestCase):

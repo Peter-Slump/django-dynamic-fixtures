@@ -1,8 +1,8 @@
-from factory_boy_fixtures.fixtures.exceptions import (
+from dynamic_fixtures.fixtures.exceptions import (
     MultipleFixturesFound,
     FixtureNotFound
 )
-from factory_boy_fixtures.fixtures.loader import Loader, Graph
+from dynamic_fixtures.fixtures.loader import Loader, Graph
 
 
 class LoadFixtureRunner(object):

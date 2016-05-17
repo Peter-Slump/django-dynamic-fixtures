@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from factory_boy_fixtures.fixtures.runner import LoadFixtureRunner
+from dynamic_fixtures.fixtures.runner import LoadFixtureRunner
 
 
 class Command(BaseCommand):

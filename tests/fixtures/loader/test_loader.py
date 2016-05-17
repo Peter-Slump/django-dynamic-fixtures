@@ -6,8 +6,8 @@ from django.test.utils import override_settings
 
 import mock
 
-from factory_boy_fixtures.fixtures.exceptions import BadFixtureError
-from factory_boy_fixtures.fixtures.loader import Loader
+from dynamic_fixtures.fixtures.exceptions import BadFixtureError
+from dynamic_fixtures.fixtures.loader import Loader
 
 # Make sure the test apps can be imported
 sys.path.append('{}/apps'.format(os.path.dirname(os.path.abspath(__file__))))
@@ -31,7 +31,7 @@ class FixturesLoaderTestCase(TestCase):
             ('app_two', '001_load_some_data'): mock.ANY,
         })
 
-        from factory_boy_fixtures.fixtures.basefixture import BaseFixture
+        from dynamic_fixtures.fixtures.basefixture import BaseFixture
         for key, fixture in self.loader.disk_fixtures.items():
             self.assertEqual(key[0], fixture._app_label)
             self.assertEqual(key[1], fixture._name)

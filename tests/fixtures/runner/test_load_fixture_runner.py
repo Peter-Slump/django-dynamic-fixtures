@@ -2,10 +2,10 @@ from unittest import TestCase
 
 import mock
 
-from factory_boy_fixtures.fixtures.exceptions import FixtureNotFound, \
+from dynamic_fixtures.fixtures.exceptions import FixtureNotFound, \
     MultipleFixturesFound
-from factory_boy_fixtures.fixtures.loader import Graph
-from factory_boy_fixtures.fixtures.runner import LoadFixtureRunner
+from dynamic_fixtures.fixtures.loader import Graph
+from dynamic_fixtures.fixtures.runner import LoadFixtureRunner
 from tests.mixins import MockTestCaseMixin
 
 
@@ -13,9 +13,9 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
 
     def setUp(self):
         self.loader_mock = self.setup_mock(
-            'factory_boy_fixtures.fixtures.runner.Loader')
+            'dynamic_fixtures.fixtures.runner.Loader')
         self.graph_mock = self.setup_mock(
-            'factory_boy_fixtures.fixtures.runner.Graph')
+            'dynamic_fixtures.fixtures.runner.Graph')
 
     def test_init(self):
         """

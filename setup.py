@@ -2,7 +2,7 @@ import os
 
 from setuptools import setup, find_packages
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
     README = readme.read()
@@ -11,7 +11,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='Django Factory Boy Fixtures',
+    name='Django Dynamic Fixtures',
     version=VERSION,
     long_description=README,
     package_dir={'': 'src'},
@@ -27,11 +27,10 @@ setup(
         'pytest-django',
         'pytest-pythonpath',
         'mock==1.3.0',
-        'factory-boy>=2.6.0'
     ],
     url='',
     license='MIT',
     author='Peter Slump',
     author_email='peter@yarf.nl',
-    description='Install Dango fixtures using Factory Boy.'
+    description='Install Dynamic Django fixtures.'
 )
