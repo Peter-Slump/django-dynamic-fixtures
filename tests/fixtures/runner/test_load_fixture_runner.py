@@ -16,7 +16,7 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
             self.loader_mock = self.setup_mock(
                 'dynamic_fixtures.fixtures.runner.Loader')
         except AttributeError:
-            print mock.__version__
+            print(mock.__version__)
         self.graph_mock = self.setup_mock(
             'dynamic_fixtures.fixtures.runner.Graph')
 
