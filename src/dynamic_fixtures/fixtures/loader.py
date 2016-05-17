@@ -108,7 +108,7 @@ class Graph(object):
         if resolved is None:
             resolved = []
         if node is None:
-            dependencies = self._nodes.keys()
+            dependencies = sorted(self._nodes.keys())
         else:
             dependencies = self._nodes[node]
             seen.append(node)
