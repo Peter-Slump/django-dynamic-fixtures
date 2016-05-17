@@ -23,10 +23,8 @@ setup(
         'Django==1.7.*'
     ],
     tests_require=[
-        'pytest',
         'pytest-django',
-        'pytest-pythonpath',
-        'mock==1.3.0',
+        'mock',
     ],
     url='',
     license='MIT',
