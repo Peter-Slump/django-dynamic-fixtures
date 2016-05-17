@@ -20,7 +20,7 @@ setup(
         'pytest-runner'
     ],
     install_requires=[
-        'Django==1.7'
+        'Django==1.7.*'
     ],
     tests_require=[
         'pytest',

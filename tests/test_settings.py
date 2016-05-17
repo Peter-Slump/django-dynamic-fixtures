@@ -2,8 +2,6 @@ from __future__ import absolute_import
 
 import os
 
-print 'hoi'
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'very-secret-string-only-used-for-testing-please-change!'
 
