@@ -12,8 +12,11 @@ from tests.mixins import MockTestCaseMixin
 class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
 
     def setUp(self):
-        self.loader_mock = self.setup_mock(
-            'dynamic_fixtures.fixtures.runner.Loader')
+        try:
+            self.loader_mock = self.setup_mock(
+                'dynamic_fixtures.fixtures.runner.Loader')
+        except AttributeError:
+            print mock.__version__
         self.graph_mock = self.setup_mock(
             'dynamic_fixtures.fixtures.runner.Graph')
 

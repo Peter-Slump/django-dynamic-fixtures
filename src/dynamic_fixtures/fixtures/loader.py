@@ -38,7 +38,11 @@ class Loader(object):
                 if "No module named" in str(e) and FIXTURES_MODULE_NAME in str(e):
                     continue
                 raise
-            directory = os.path.dirname(module.__file__)
+            try:
+                directory = os.path.dirname(module.__file__)
+            except AttributeError:
+                # No __file__ available for module
+                continue
             # Scan for .py files
             fixture_names = set()
             for name in os.listdir(directory):
