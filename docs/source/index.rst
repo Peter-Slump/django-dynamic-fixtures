@@ -17,7 +17,7 @@ For all these issues Django Dynamic Fixtures has a solution and even more!
 
 Features:
   - :ref:`write-fixtures` in Python;
-  - Load only required fixtures;
+  - :ref:`load_fixtures` which are required for your task;
   - Manage fixture :ref:`dependencies`.
 
 
@@ -70,6 +70,7 @@ free to setup your fixture data::
        def load(self):
            Author.objects.create(name="John Doe")
 
+.. _load_fixtures:
 
 Load fixtures
 =============
