@@ -3,6 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+=================================================
 Welcome to Django Dynamic Fixtures documentation!
 =================================================
 
@@ -15,9 +16,9 @@ can get 'outdated'.
 For all these issues Django Dynamic Fixtures has a solution and even more!
 
 Features:
-  - Write fixtures in Python code;
+  - :ref:`write-fixtures` in Python;
   - Load only required fixtures;
-  - Manage fixture dependencies.
+  - Manage fixture :ref:`dependencies`.
 
 
 Installation
@@ -40,6 +41,9 @@ Or make sure the app is not loaded on production::
    # settings.py
    if DEBUG:
       INSTALLED_APPS = INSTALLED_APPS + ['dynamic_fixtures']
+
+
+.. _write-fixtures:
 
 Write Fixtures
 ==============
@@ -74,6 +78,17 @@ To load the fixtures you can call the management command `load_dynamic_fixtures`
 
   $ ./manage.py load_dynamic_fixtures
 
+You can also define wich fixtures you want to load. In this case the requested
+fixture will be loaded plus all depending fixtures. This ensures that you always
+have a valid dataset::
+
+   $ ./manage.py load_dynamic_fixtures my_app 0001_create_example_author
+
+Or load all fixtures for a given app::
+
+   $ ./manage.py load_dynamic_fixtures my_app
+
+.. _dependencies:
 
 Dependencies
 ============
