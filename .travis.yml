@@ -6,6 +6,11 @@ python:
 install:
   - pip install -U pip
   - pip install -U wheel setuptools
+  - pip install -q Django==$DJANGO_VERSION
+  - python setup.py -q install
+env:
+  - DJANGO_VERSION=1.7
+  - DJANGO_VERSION=1.8
 
 # command to run tests
 script: python setup.py test
