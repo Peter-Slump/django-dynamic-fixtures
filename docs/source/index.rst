@@ -3,15 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-=================================================
-Welcome to Django Dynamic Fixtures documentation!
-=================================================
+=====================================================
+Welcome to the Django Dynamic Fixtures documentation!
+=====================================================
 
 Django Dynamic Fixtures is a Django app which gives you the ability to setup
-your fixture data in a more dynamic way. Static fixtures are sometimes too
-static. Even the primary keys are static which can be hard to maintain. When
-your application depends on data with a recent timestamp your static fixtures
-can get 'outdated'.
+fixture-data in a more dynamic way. Static fixtures are sometimes too
+static in a way that for example even the primary keys are static defined, this
+can be very hard to maintain especially in bigger projects. Another example;
+when your application depends on data with a recent timestamp your static
+fixtures can get 'outdated'.
 
 For all these issues Django Dynamic Fixtures has a solution and even more!
 
@@ -45,22 +46,22 @@ Or make sure the app is not loaded on production::
 
 .. _write-fixtures:
 
-Write Fixtures
+Write fixtures
 ==============
 
 All fixtures are written in .py files the `fixtures`-module of your app.
 
 Recommended is to prefix the fixture files with numbers just like you probably
-know from the `Django migrations <https://docs.djangoproject.com/en/1.7/topics/migrations/#migration-files>`_.:
+already know from the `Django migrations <https://docs.djangoproject.com/en/1.7/topics/migrations/#migration-files>`_.:
 
-Inside the fixture file you can have to create a class called `Fixture`. This
+Inside the fixture file you have to create a class called `Fixture`. This
 class should extend from :class:`dynamic_fixtures.fixtures.basefixture.BaseFixture`.
 
 In this class you define at least the `load`-method. In this method your are
-free to setup your fixture data::
+free to setup your fixture data in a way you like::
 
-   #my_django_projects/my_app/fixtures/0001_create_example_author.py
-   from dynamic_fixtures.fixtures.basefixture import BaseFixture
+   #my_django_project/my_app/fixtures/0001_create_example_author.py
+   from dynamic_fixtures.fixtures import BaseFixture
 
    from my_app.models import Author
 
@@ -79,9 +80,9 @@ To load the fixtures you can call the management command `load_dynamic_fixtures`
 
   $ ./manage.py load_dynamic_fixtures
 
-You can also define wich fixtures you want to load. In this case the requested
+You can also specify which fixtures you want to load. In this case the requested
 fixture will be loaded plus all depending fixtures. This ensures that you always
-have a valid dataset::
+have a valid data-set::
 
    $ ./manage.py load_dynamic_fixtures my_app 0001_create_example_author
 
@@ -97,8 +98,8 @@ Dependencies
 It's also possible to maintain dependencies between fixtures. This can be
 accomplished in the same way as `Django migrations <https://docs.djangoproject.com/en/1.7/topics/migrations/#migration-files>`_::
 
-    #my_django_projects/my_app/fixtures/0002_create_example_books.py
-    from dynamic_fixtures.fixtures.basefixture import BaseFixture
+    #my_django_project/my_app/fixtures/0002_create_example_books.py
+    from dynamic_fixtures.fixtures import BaseFixture
 
     from my_app.models import Book
 
@@ -116,18 +117,18 @@ accomplished in the same way as `Django migrations <https://docs.djangoproject.c
             Book.objects.create(title="About roses and gladiolus", author=author)
             Book.objects.create(title="The green smurf", author=author)
 
-The library take care that the depending fixture is loaded before this one so
+The library take care that the depending fixture is loaded before this one, so
 you know for sure that the entity is available in the database.
 
 Gotcha's
 ========
 
-A really powerful combination is this library combined with `Factory Boy <https://github.com/rbarrois/factory_boy>`_.
+A really powerful combination is a combination of this library and `Factory Boy <https://github.com/rbarrois/factory_boy>`_.
 In the example below 50 authors will get created from factories.::
 
 
-   #my_django_projects/my_app/fixtures/0001_create_example_author.py
-   from dynamic_fixtures.fixtures.basefixture import BaseFixture
+   #my_django_project/my_app/fixtures/0001_create_example_author.py
+   from dynamic_fixtures.fixtures import BaseFixture
 
    from my_app.factories import AuthorFactory
 
