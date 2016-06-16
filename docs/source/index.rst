@@ -7,7 +7,8 @@
 Welcome to the Django Dynamic Fixtures documentation!
 =====================================================
 
-Django Dynamic Fixtures is a Django app which gives you the ability to setup
+`Django Dynamic Fixtures <https://github.com/Peter-Slump/django-dynamic-fixtures>`_
+is a Django app which gives you the ability to setup
 fixture-data in a more dynamic way. Static fixtures are sometimes too
 static in a way that for example even the primary keys are static defined, this
 can be very hard to maintain especially in bigger projects. Another example;
@@ -27,7 +28,7 @@ Installation
 
 First install the package::
 
-  $ pip install git+git://github.com/Peter-Slump/django-dynamic-fixtures.git
+  $ pip install django-dynamic-fixtures
 
 Add the app to your project's `settings.py` file::
 

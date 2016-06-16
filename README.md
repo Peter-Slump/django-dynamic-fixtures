@@ -13,6 +13,12 @@ A Django app to install dynamic fixtures.
 
 ## Development
 
+Install development environment:
+
+```bash
+$ make install-python
+```
+
 Run all unittests*:
 
 ```bash
@@ -26,7 +32,7 @@ $ python setup.py test
 Install dependencies: 
 
 ```bash
-$ make doc-install
+$ make install-python
 ```
 
 Docs can be written using Sphinx in `docs/source`.

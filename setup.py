@@ -11,11 +11,21 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='Django Dynamic Fixtures',
+    name='django-dynamic-fixtures',
     version=VERSION,
     long_description=README,
     package_dir={'': 'src'},
     packages=find_packages('src'),
+    extras_require={
+        'dev': [
+            'bumpversion==0.5.3',
+            'twine == 1.6.5',
+        ],
+        'doc': [
+            'Sphinx==1.4.4',
+            'sphinx-autobuild==0.6.0',
+        ]
+    },
     setup_requires=[
         'pytest-runner'
     ],
@@ -25,9 +35,8 @@ setup(
     tests_require=[
         'pytest-django',
         'mock>=2.0',
-        'bumpversion==0.5.3',
     ],
-    url='',
+    url='https://github.com/Peter-Slump/django-dynamic-fixtures',
     license='MIT',
     author='Peter Slump',
     author_email='peter@yarf.nl',
