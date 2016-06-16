@@ -13,11 +13,13 @@ A Django app to install dynamic fixtures.
 
 ## Development
 
-Run all unittests:
+Run all unittests*:
 
 ```bash
 $ python setup.py test
 ```
+
+\* Make sure that the `tests` folder isn't added to the sys path.
 
 ### Writing documentation
 
