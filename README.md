@@ -1,7 +1,7 @@
 # django-dynamic-fixtures
 
 
-Django: **1.7, 1.8**  
+Django: **1.7, 1.8, 1.9**  
 Python: **2.7, 3.3, 3.4**  
 
 [![Build Status](https://travis-ci.org/Peter-Slump/django-dynamic-fixtures.svg?branch=master)](https://travis-ci.org/Peter-Slump/django-dynamic-fixtures)
