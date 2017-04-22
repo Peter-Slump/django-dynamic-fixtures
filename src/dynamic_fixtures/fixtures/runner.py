@@ -74,6 +74,8 @@ class LoadFixtureRunner(object):
         :param callable progress_callback: Callback which will be called while
                                            handling the nodes.
         """
+        
+        fixture_count = 0
 
         if progress_callback and not callable(progress_callback):
             raise Exception('Callback should be callable')
@@ -92,4 +94,6 @@ class LoadFixtureRunner(object):
             self.loader.disk_fixtures[node].load()
             if progress_callback:
                 progress_callback('load_success', node)
-
+            fixture_count += 1
+        
+        return fixture_count

@@ -22,6 +22,7 @@ $ make install-python
 Run all unittests*:
 
 ```bash
+$ pip install --upgrade distribute
 $ python setup.py test
 ```
 
