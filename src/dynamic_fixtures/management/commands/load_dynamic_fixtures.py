@@ -22,7 +22,7 @@ class Command(BaseCommand):
             progress_callback=self.progress_callback
         )
         
-        self.stdout.write('Loaded {} fixtures'.format(fixture_count)
+        self.stdout.write('Loaded {} fixtures'.format(fixture_count))
 
     def progress_callback(self, action, node):
         if action == 'load_start':
