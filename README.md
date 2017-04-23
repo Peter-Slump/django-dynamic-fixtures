@@ -7,6 +7,12 @@ Python: **2.7, 3.3, 3.4**
 [![Build Status](https://travis-ci.org/Peter-Slump/django-dynamic-fixtures.svg?branch=master)](https://travis-ci.org/Peter-Slump/django-dynamic-fixtures)
 [![Documentation Status](https://readthedocs.org/projects/django-dynamic-fixtures/badge/?version=latest)](http://django-dynamic-fixtures.readthedocs.io/en/latest/?badge=latest)
 
+
+[![PyPI](https://img.shields.io/pypi/l/django-dynamic-fixtures.svg)]()
+[![PyPI](https://img.shields.io/pypi/v/django-dynamic-fixtures.svg)]()
+[![PyPI](https://img.shields.io/pypi/wheel/django-dynamic-fixtures.svg)]()
+
+
 A Django app to install dynamic fixtures.
 
 [Documentation](http://django-dynamic-fixtures.readthedocs.io/en/latest/)
