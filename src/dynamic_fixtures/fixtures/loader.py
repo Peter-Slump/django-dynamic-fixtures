@@ -77,7 +77,7 @@ class Graph(object):
         if node not in self._nodes:
             raise KeyError('Node %s not set', str(node))
         if dependency not in self._nodes:
-            raise KeyError('Dependency %s not set', str(dependency))
+            raise KeyError('Dependency "%s" required for "%s" but is not set.', str(dependency), str(node))
         self._nodes[node].append(dependency)
 
     def __iter__(self):

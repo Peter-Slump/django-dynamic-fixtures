@@ -73,3 +73,14 @@ class GraphTestCase(TestCase):
         """
         flat_list = self.graph.resolve_nodes(['b', 'c'])
         self.assertEqual(flat_list, ['d', 'e', 'c', 'b'])
+
+    def test_error_missing_dependency(self):
+        """
+        Case: A dependency is required which is not available
+        Expected: A proper error is returned
+        """
+        with self.assertRaises(KeyError) as e:
+            self.graph.add_dependency('c', 'x')
+
+        self.assertEqual(e.exception.args[0] % e.exception.args[1:],
+                         'Dependency "x" required for "c" but is not set.')
