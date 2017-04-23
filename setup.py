@@ -33,7 +33,6 @@ setup(
         'Django>=1.7'
     ],
     tests_require=[
-        'pytest>=2.9',
         'pytest-django',
         'mock>=2.0',
     ],
