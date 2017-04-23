@@ -40,5 +40,19 @@ setup(
     license='MIT',
     author='Peter Slump',
     author_email='peter@yarf.nl',
-    description='Install Dynamic Django fixtures.'
+    description='Install Dynamic Django fixtures.',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Framework :: Django :: 1.7',
+        'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.9',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Topic :: Software Development :: Testing',
+    ]
+
 )
