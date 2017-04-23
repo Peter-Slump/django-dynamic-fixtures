@@ -17,9 +17,12 @@ class Command(BaseCommand):
             nodes = runner.get_fixture_node(app_label=args[0],
                                             fixture_prefix=args[1])
 
-        runner.load_fixtures(nodes=nodes,
-                             progress_callback=self.progress_callback)
-        self.stdout.write('All fixtures are loaded')
+        fixture_count = runner.load_fixtures(
+            nodes=nodes,
+            progress_callback=self.progress_callback
+        )
+        
+        self.stdout.write('Loaded {} fixtures'.format(fixture_count))
 
     def progress_callback(self, action, node):
         if action == 'load_start':

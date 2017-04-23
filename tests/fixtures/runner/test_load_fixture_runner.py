@@ -143,6 +143,40 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
             runner.get_fixture_node(app_label='app_one',
                                     fixture_prefix='0001')
 
+    def test_load_fixtures_return_value_two_fixtures(self):
+        """
+        Case: Two fictures get loaded
+        Expected: 2 as return value
+        """
+
+        runner = LoadFixtureRunner()
+        runner._graph = self.graph_mock()
+        runner._graph.resolve_node.return_value = [
+            ('app_one', '0001_my_fixture'),
+            ('app_one', '0002_my_other_fixture'),
+        ]
+        runner.loader = self.loader_mock()
+        runner.loader.disk_fixtures = {
+            ('app_one', '0001_my_fixture'): mock.MagicMock(),
+            ('app_one', '0002_my_other_fixture'): mock.MagicMock()
+        }
+
+        self.assertEqual(runner.load_fixtures(), 2)
+
+    def test_load_fixtures_return_value_no_fixtures(self):
+        """
+        Case: No fixtures found
+        Expected: 0 as return value
+        """
+
+        runner = LoadFixtureRunner()
+        runner._graph = self.graph_mock()
+        runner._graph.resolve_node.return_value = []
+        runner.loader = self.loader_mock()
+        runner.loader.disk_fixtures = {}
+
+        self.assertEqual(runner.load_fixtures(), 0)
+
     def test_load_fixtures(self):
         """
         Case: Fixtures get loaded
@@ -164,6 +198,7 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         }
 
         call_back = mock.Mock(return_value=None)
+
         runner.load_fixtures(progress_callback=call_back)
 
         runner.graph.resolve_node.assert_called_once_with()
