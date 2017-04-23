@@ -8,9 +8,9 @@ Python: **2.7, 3.3, 3.4**
 [![Documentation Status](https://readthedocs.org/projects/django-dynamic-fixtures/badge/?version=latest)](http://django-dynamic-fixtures.readthedocs.io/en/latest/?badge=latest)
 
 
-[![PyPI](https://img.shields.io/pypi/l/django-dynamic-fixtures.svg)]()
-[![PyPI](https://img.shields.io/pypi/v/django-dynamic-fixtures.svg)]()
-[![PyPI](https://img.shields.io/pypi/wheel/django-dynamic-fixtures.svg)]()
+[![PyPI](https://img.shields.io/pypi/l/django-dynamic-fixtures.svg)](https://pypi.python.org/pypi/django-dynamic-fixtures)
+[![PyPI](https://img.shields.io/pypi/v/django-dynamic-fixtures.svg)](https://pypi.python.org/pypi/django-dynamic-fixtures)
+[![PyPI](https://img.shields.io/pypi/wheel/django-dynamic-fixtures.svg)](https://pypi.python.org/pypi/django-dynamic-fixtures)
 
 
 A Django app to install dynamic fixtures.
