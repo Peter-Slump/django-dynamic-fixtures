@@ -3,17 +3,19 @@ python:
   - "2.7"
   - "3.3"
   - "3.4"
+  - "3.5"
 before_install:
-  - pip install --upgrade pytest
-install:
   - pip install -U pip
-  - pip install -U wheel setuptools
+  - pip install -U wheel setuptools pytest
   - pip install -q Django==$DJANGO_VERSION
+install:
   - python setup.py -q install
 env:
   - DJANGO_VERSION=1.7
   - DJANGO_VERSION=1.8
   - DJANGO_VERSION=1.9
+  - DJANGO_VERSION=1.10
+  - DJANGO_VERSION=1.11
 
 matrix:
     exclude:
