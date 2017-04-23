@@ -10,3 +10,7 @@ when your application depends on data with a recent timestamp your static
 fixtures can get 'outdated'.
 
 For all these issues Django Dynamic Fixtures has a solution and even more!
+
+Read the documentation `documentation`_.
+
+.. _documentation: http://django-dynamic-fixtures.readthedocs.io/en/latest/
