@@ -34,8 +34,8 @@ setup(
     ],
     tests_require=[
         'pytest-django',
-        'mock',
-        'pytest-cov'
+        'pytest-cov',
+        'mock>=2.0',
     ],
     url='https://github.com/Peter-Slump/django-dynamic-fixtures',
     license='MIT',
