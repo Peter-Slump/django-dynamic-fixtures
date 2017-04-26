@@ -8,6 +8,7 @@ before_install:
   - pip install -U pip
   - pip install -U wheel setuptools pytest
   - pip install -q Django==$DJANGO_VERSION
+  - pip install codecov
 install:
   - python setup.py -q install
 env:
@@ -29,4 +30,8 @@ matrix:
       env: DJANGO_VERSION=1.7
 
 # command to run tests
-script: python setup.py test
+script:
+  - python setup.py test --addopts "--cov=./"
+
+after_success:
+  - codecov
