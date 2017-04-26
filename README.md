@@ -6,6 +6,7 @@ Python: **2.7, 3.3, 3.4, 3.5**
 
 [![Build Status](https://travis-ci.org/Peter-Slump/django-dynamic-fixtures.svg?branch=master)](https://travis-ci.org/Peter-Slump/django-dynamic-fixtures)
 [![Documentation Status](https://readthedocs.org/projects/django-dynamic-fixtures/badge/?version=latest)](http://django-dynamic-fixtures.readthedocs.io/en/latest/?badge=latest)
+[![codecov](https://codecov.io/gh/Peter-Slump/django-dynamic-fixtures/branch/master/graph/badge.svg)](https://codecov.io/gh/Peter-Slump/django-dynamic-fixtures)
 
 
 [![PyPI](https://img.shields.io/pypi/l/django-dynamic-fixtures.svg)](https://pypi.python.org/pypi/django-dynamic-fixtures)
