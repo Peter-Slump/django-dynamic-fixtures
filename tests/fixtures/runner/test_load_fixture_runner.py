@@ -214,7 +214,7 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
             mock.call('load_success', ('app_two', '0001_my_other_fixture'))
         ])
 
-    def load_fixtures_with_given_nodes(self):
+    def test_load_fixtures_with_given_nodes(self):
         """
         Case: Load fixtures get called with a given list of nodes
         Expected: resolve_nodes method get called with the list of nodes
@@ -236,13 +236,13 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         runner.load_fixtures(nodes=[('app_one', '0001_my_fixture'),
                                     ('app_one', '0002_my_other_fixture')])
 
-        runner.graph.resolve_nodes.assert_called_once_with(
+        runner.graph.resolve_nodes.assert_called_once_with([
             ('app_one', '0001_my_fixture'),
             ('app_one', '0002_my_other_fixture')
-        )
+        ])
         runner.loader.disk_fixtures[
             ('app_one', '0001_my_fixture')].load.assert_called_once_with()
         runner.loader.disk_fixtures[
-            ('app_one', '0001_my_fixture')].load.assert_called_once_with()
+            ('app_one', '0002_my_other_fixture')].load.assert_called_once_with()
         self.assertFalse(runner.loader.disk_fixtures[
-                             ('app_one', '0001_my_fixture')].load.called)
+                             ('app_two', '0001_my_other_fixture')].load.called)
