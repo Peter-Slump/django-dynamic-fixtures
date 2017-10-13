@@ -8,9 +8,20 @@ class Command(BaseCommand):
     help_text = 'Load fixtures while keeping dependencies in mind.'
     args = '[app_label] [fixture_name]'
 
+    def add_arguments(self, parser):
+        parser.add_argument('app_label', type=str)
+        parser.add_argument('fixture_name', default=None, nargs='?', type=str)
+
     def handle(self, *args, **options):
         runner = LoadFixtureRunner()
         nodes = None
+
+        if len(args) == 0:
+            if options['fixture_name'] is None:
+                args = (options['app_label'], )
+            else:
+                args = (options['app_label'], options['fixture_name'])
+
         if len(args) == 1:
             nodes = runner.get_app_nodes(app_label=args[0])
         elif len(args) == 2:
