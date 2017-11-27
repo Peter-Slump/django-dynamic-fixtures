@@ -9,7 +9,7 @@ class Command(BaseCommand):
     args = '[app_label] [fixture_name]'
 
     def add_arguments(self, parser):
-        parser.add_argument('app_label', type=str)
+        parser.add_argument('app_label', default=None, nargs='?', type=str)
         parser.add_argument('fixture_name', default=None, nargs='?', type=str)
 
     def handle(self, *args, **options):
@@ -17,7 +17,7 @@ class Command(BaseCommand):
         nodes = None
 
         if len(args) == 0:
-            if options['fixture_name'] is None:
+            if options['app_label'] is None and options['fixture_name'] is None:
                 args = (options['app_label'], )
             else:
                 args = (options['app_label'], options['fixture_name'])

@@ -58,12 +58,12 @@ class LoadFixtureRunner(object):
 
         if len(nodes) > 1:
             raise MultipleFixturesFound("The following fixtures with prefix "
-                                        "'%s' are found in app '%s': %s",
-                                        fixture_prefix, app_label,
-                                        ', '.join([node[1] for node in nodes]))
+                                        "'%s' are found in app '%s': %s" %
+                                        (fixture_prefix, app_label,
+                                        ', '.join([node[1] for node in nodes])))
         elif len(nodes) == 0:
             raise FixtureNotFound("Fixture with prefix '%s' not found in app "
-                                  "'%s'", fixture_prefix, app_label)
+                                  "'%s'" % (fixture_prefix, app_label))
         return nodes
 
     def load_fixtures(self, nodes=None, progress_callback=None):

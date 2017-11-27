@@ -2,8 +2,10 @@ from unittest import TestCase
 
 import mock
 
-from dynamic_fixtures.fixtures.exceptions import FixtureNotFound, \
+from dynamic_fixtures.fixtures.exceptions import (
+    FixtureNotFound,
     MultipleFixturesFound
+)
 from dynamic_fixtures.fixtures.loader import Graph
 from dynamic_fixtures.fixtures.runner import LoadFixtureRunner
 from tests.mixins import MockTestCaseMixin
@@ -123,9 +125,13 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
             ('app_one', '0003_my_other_fixture'),
         ])
 
-        with self.assertRaises(FixtureNotFound):
+        with self.assertRaises(FixtureNotFound) as e:
             runner.get_fixture_node(app_label='app_one',
                                     fixture_prefix='0006')
+
+        self.assertEqual("Fixture with prefix '0006' not found in app "
+                         "'app_one'",
+                         str(e.exception))
 
     def test_get_fixture_nodes_multiple_returned(self):
         """
@@ -139,9 +145,14 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
             ('app_one', '0003_my_other_fixture'),
         ])
 
-        with self.assertRaises(MultipleFixturesFound):
+        with self.assertRaises(MultipleFixturesFound) as e:
             runner.get_fixture_node(app_label='app_one',
                                     fixture_prefix='0001')
+
+        self.assertEqual("The following fixtures with prefix '0001' are found"
+                         " in app 'app_one': 0001_my_fixture, "
+                         "0001_my_other_fixture",
+                         str(e.exception))
 
     def test_load_fixtures_return_value_two_fixtures(self):
         """
