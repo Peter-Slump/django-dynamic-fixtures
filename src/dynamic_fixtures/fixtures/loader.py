@@ -28,35 +28,57 @@ class Loader(object):
             if app_config.models_module is None:
                 continue
 
-            # Get the fixtures module diectory
-            module_name = self.fixtures_module(app_config.label)
-            try:
-                module = import_module(module_name)
-            except ImportError as e:
-                # I hate doing this, but I don't want to squash other import errors.
-                # Might be better to try a directory check directly.
-                if "No module named" in str(e) and FIXTURES_MODULE_NAME in str(e):
-                    continue
-                raise
-            try:
-                directory = os.path.dirname(module.__file__)
-            except AttributeError:
-                # No __file__ available for module
-                continue
-            # Scan for .py files
-            fixture_names = set()
-            for name in os.listdir(directory):
-                if name.endswith(".py"):
-                    import_name = name.rsplit(".", 1)[0]
-                    if import_name[0] not in "_.~":
-                        fixture_names.add(import_name)
-            # Load them
-            for fixture_name in fixture_names:
-                fixture_module = import_module("%s.%s" % (module_name, fixture_name))
-                if not hasattr(fixture_module, "Fixture"):
-                    raise BadFixtureError(
-                        "Fixture %s in app %s has no Fixture class" % (fixture_name, app_config.label))
-                self.disk_fixtures[app_config.label, fixture_name] = fixture_module.Fixture(fixture_name, app_config.label)
+            self.handle_app_config(app_config=app_config)
+
+    def handle_app_config(self, app_config):
+
+        # Get the fixtures module directory
+        module_name = self.fixtures_module(app_config.label)
+
+        directory = self.get_module_directory(module_name=module_name)
+
+        if directory is None:
+            return
+
+        fixture_names = self.get_fixture_files(directory=directory)
+
+        # Load them
+        for fixture_name in fixture_names:
+            fixture_module = import_module("%s.%s" % (module_name, fixture_name))
+            if not hasattr(fixture_module, "Fixture"):
+                raise BadFixtureError(
+                    "Fixture %s in app %s has no Fixture class" % (fixture_name, app_config.label))
+            self.disk_fixtures[app_config.label, fixture_name] = fixture_module.Fixture(fixture_name, app_config.label)
+
+    @staticmethod
+    def get_fixture_files(directory):
+        # Scan for .py files
+        fixture_names = set()
+        for name in os.listdir(directory):
+            if name.endswith(".py"):
+                import_name = name.rsplit(".", 1)[0]
+                if import_name[0] not in "_.~":
+                    fixture_names.add(import_name)
+        return fixture_names
+
+    @staticmethod
+    def get_module_directory(module_name):
+        try:
+            module = import_module(module_name)
+        except ImportError as e:
+            # I hate doing this, but I don't want to squash other import errors.
+            # Might be better to try a directory check directly.
+            if "No module named" in str(e) and FIXTURES_MODULE_NAME in str(e):
+                return
+            raise
+
+        try:
+            directory = os.path.dirname(module.__file__)
+        except AttributeError:
+            # No __file__ available for module
+            return
+
+        return directory
 
 
 class Graph(object):
