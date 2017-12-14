@@ -16,6 +16,7 @@ class Command(BaseCommand):
         runner = LoadFixtureRunner()
 
         if len(args) == 1:
+            fixture_name = None
             app_label, = args
         elif len(args) == 2:
             app_label, fixture_name = args
