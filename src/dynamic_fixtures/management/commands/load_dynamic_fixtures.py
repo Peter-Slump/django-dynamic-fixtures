@@ -14,19 +14,20 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         runner = LoadFixtureRunner()
-        nodes = None
 
         if len(args) == 0:
-            if options['app_label'] is None and options['fixture_name'] is None:
-                args = (options['app_label'], )
-            else:
-                args = (options['app_label'], options['fixture_name'])
+            app_label = options.get('app_label')
+            fixture_name = options.get('fixture_name')
+        else:
+            app_label, fixture_name = args
 
-        if len(args) == 1:
-            nodes = runner.get_app_nodes(app_label=args[0])
-        elif len(args) == 2:
-            nodes = runner.get_fixture_node(app_label=args[0],
-                                            fixture_prefix=args[1])
+        if app_label is None:
+            nodes = None
+        elif fixture_name is None:
+            nodes = runner.get_app_nodes(app_label=app_label)
+        else:
+            nodes = runner.get_fixture_node(app_label=app_label,
+                                            fixture_prefix=fixture_name)
 
         fixture_count = runner.load_fixtures(
             nodes=nodes,
