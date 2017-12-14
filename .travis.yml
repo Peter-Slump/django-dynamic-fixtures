@@ -6,7 +6,7 @@ python:
   - "3.5"
 before_install:
   - pip install -U pip
-  - pip install -U wheel setuptools pytest
+  - pip install -U wheel setuptools pytest==3.2.5
   - pip install -q Django==$DJANGO_VERSION
   - pip install codecov
 install:
@@ -31,7 +31,7 @@ matrix:
 
 # command to run tests
 script:
-  - python setup.py test --addopts "--cov=./"
+  - python setup.py test --addopts "--cov=./src/dynamic_fixtures"
 
 after_success:
   - codecov
