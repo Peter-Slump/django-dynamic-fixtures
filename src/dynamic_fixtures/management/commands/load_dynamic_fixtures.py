@@ -15,11 +15,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         runner = LoadFixtureRunner()
 
-        if len(args) == 0:
+        if len(args) == 1:
+            app_label, = args
+        elif len(args) == 2:
+            app_label, fixture_name = args
+        else:
             app_label = options.get('app_label')
             fixture_name = options.get('fixture_name')
-        else:
-            app_label, fixture_name = args
 
         if app_label is None:
             nodes = None
