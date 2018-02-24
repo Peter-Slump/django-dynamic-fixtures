@@ -16,7 +16,7 @@ Python: **2.7, 3.3, 3.4, 3.5**
 
 A Django app to install dynamic fixtures.
 
-[Documentation](http://django-dynamic-fixtures.readthedocs.io/en/latest/)
+[Read documentation](http://django-dynamic-fixtures.readthedocs.io/en/latest/)
 
 ## Development
 
