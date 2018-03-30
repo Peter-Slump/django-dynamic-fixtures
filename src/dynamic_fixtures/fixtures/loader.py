@@ -44,11 +44,15 @@ class Loader(object):
 
         # Load them
         for fixture_name in fixture_names:
-            fixture_module = import_module("%s.%s" % (module_name, fixture_name))
+            fixture_module = import_module("%s.%s" % (module_name,
+                                                      fixture_name))
             if not hasattr(fixture_module, "Fixture"):
                 raise BadFixtureError(
-                    "Fixture %s in app %s has no Fixture class" % (fixture_name, app_config.label))
-            self.disk_fixtures[app_config.label, fixture_name] = fixture_module.Fixture(fixture_name, app_config.label)
+                    "Fixture %s in app %s has no Fixture class" % (
+                        fixture_name, app_config.label))
+            self.disk_fixtures[
+                app_config.label, fixture_name
+            ] = fixture_module.Fixture(fixture_name, app_config.label)
 
     @staticmethod
     def get_fixture_files(directory):
@@ -66,8 +70,8 @@ class Loader(object):
         try:
             module = import_module(module_name)
         except ImportError as e:
-            # I hate doing this, but I don't want to squash other import errors.
-            # Might be better to try a directory check directly.
+            # I hate doing this, but I don't want to squash other import
+            # errors. Might be better to try a directory check directly.
             if "No module named" in str(e) and FIXTURES_MODULE_NAME in str(e):
                 return
             raise
@@ -99,7 +103,11 @@ class Graph(object):
         if node not in self._nodes:
             raise KeyError('Node %s not set', str(node))
         if dependency not in self._nodes:
-            raise KeyError('Dependency "%s" required for "%s" but is not set.', str(dependency), str(node))
+            raise KeyError(
+                'Dependency "%s" required for "%s" but is not set.',
+                str(dependency),
+                str(node)
+            )
         self._nodes[node].append(dependency)
 
     def __iter__(self):
