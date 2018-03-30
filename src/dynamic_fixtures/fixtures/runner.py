@@ -54,13 +54,19 @@ class LoadFixtureRunner(object):
         :return: list of found fixtures.
         """
         app_nodes = self.get_app_nodes(app_label=app_label)
-        nodes = [node for node in app_nodes if node[1].startswith(fixture_prefix)]
+        nodes = [
+            node for node in app_nodes if node[1].startswith(fixture_prefix)
+            ]
 
         if len(nodes) > 1:
-            raise MultipleFixturesFound("The following fixtures with prefix "
-                                        "'%s' are found in app '%s': %s" %
-                                        (fixture_prefix, app_label,
-                                        ', '.join([node[1] for node in nodes])))
+            raise MultipleFixturesFound(
+                "The following fixtures with prefix '%s' are found in app '%s'"
+                ": %s" % (
+                    fixture_prefix, app_label, ', '.join(
+                        [node[1] for node in nodes]
+                    )
+                )
+            )
         elif len(nodes) == 0:
             raise FixtureNotFound("Fixture with prefix '%s' not found in app "
                                   "'%s'" % (fixture_prefix, app_label))
@@ -74,7 +80,7 @@ class LoadFixtureRunner(object):
         :param callable progress_callback: Callback which will be called while
                                            handling the nodes.
         """
-        
+
         fixture_count = 0
 
         if progress_callback and not callable(progress_callback):
@@ -95,5 +101,5 @@ class LoadFixtureRunner(object):
             if progress_callback:
                 progress_callback('load_success', node)
             fixture_count += 1
-        
+
         return fixture_count

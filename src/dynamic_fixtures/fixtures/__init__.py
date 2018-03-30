@@ -1,1 +1,1 @@
-from .basefixture import BaseFixture
+from .basefixture import BaseFixture  # noqa: F401

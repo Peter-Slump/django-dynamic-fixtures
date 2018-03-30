@@ -36,7 +36,7 @@ class Command(BaseCommand):
             nodes=nodes,
             progress_callback=self.progress_callback
         )
-        
+
         self.stdout.write('Loaded {} fixtures'.format(fixture_count))
 
     def progress_callback(self, action, node):
