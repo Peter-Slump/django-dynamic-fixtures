@@ -37,7 +37,7 @@ class Loader(OriginLoader):
 
         # Load them
         for fixture_name in fixture_names:
-            fixture_module_name="%s.%s" % (module_name, fixture_name)
+            fixture_module_name = "%s.%s" % (module_name, fixture_name)
             try:
                 fixture_module = import_module(fixture_module_name)
             except Exception as err:
@@ -64,7 +64,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print()
-        print("_"*79)
+        print("_" * 79)
         print("Discovery all dynamic fixtures...\n")
 
         runner = LoadFixtureRunner()
@@ -72,7 +72,7 @@ class Command(BaseCommand):
         plan = runner.graph.resolve_node()
 
         print()
-        print("_"*79)
+        print("_" * 79)
         print("All found dynamic fixtures which would be processed in that order:\n")
 
         fixtures_count = 0

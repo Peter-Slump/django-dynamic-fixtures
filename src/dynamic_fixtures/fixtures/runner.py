@@ -56,7 +56,7 @@ class LoadFixtureRunner(object):
         app_nodes = self.get_app_nodes(app_label=app_label)
         nodes = [
             node for node in app_nodes if node[1].startswith(fixture_prefix)
-            ]
+        ]
 
         if len(nodes) > 1:
             raise MultipleFixturesFound(
