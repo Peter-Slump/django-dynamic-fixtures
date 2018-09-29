@@ -31,6 +31,8 @@ Changelog
 * Dry-run mode
 * List available fixtures
 * Run all fixtures in an transaction
+* Removed support for Django 1.7
+* Added support for Django 2.0
 
 Installation
 ============
