@@ -54,6 +54,6 @@ class Command(BaseCommand):
         elif action == 'load_success':
             message = 'SUCCESS'
             if elapsed_time:
-                message += ' {:.03}s'.format(elapsed_time)
+                message += ' ({:.03} seconds) '.format(elapsed_time)
 
             self.stdout.write(message)

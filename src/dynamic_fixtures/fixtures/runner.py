@@ -1,5 +1,7 @@
 import time
 
+from django.db import transaction
+
 from dynamic_fixtures.fixtures.exceptions import (
     MultipleFixturesFound,
     FixtureNotFound
@@ -101,7 +103,8 @@ class LoadFixtureRunner(object):
                 progress_callback('load_start', node)
 
             start = time.time()
-            self.loader.disk_fixtures[node].load()
+            with transaction.atomic():
+                self.loader.disk_fixtures[node].load()
             if progress_callback:
                 progress_callback('load_success', node, time.time() - start)
             fixture_count += 1
