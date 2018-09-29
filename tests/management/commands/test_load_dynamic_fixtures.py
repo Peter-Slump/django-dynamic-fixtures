@@ -24,7 +24,8 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
 
         self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=None
+            nodes=None,
+            dry_run=False
         )
 
     def test_one_argument(self):
@@ -39,7 +40,8 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
 
         self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_app_nodes.return_value
+            nodes=self.mocked_fixtures_runner.return_value.get_app_nodes.return_value,
+            dry_run=False
         )
 
     def test_two_arguments(self):
@@ -55,7 +57,8 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
 
         self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_fixture_node.return_value
+            nodes=self.mocked_fixtures_runner.return_value.get_fixture_node.return_value,
+            dry_run=False
         )
 
     def test_app_label_argument(self):
@@ -70,7 +73,8 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
 
         self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_app_nodes.return_value
+            nodes=self.mocked_fixtures_runner.return_value.get_app_nodes.return_value,
+            dry_run=False
         )
 
     def test_app_label_and_fixture_prefix_arguments(self):
@@ -86,5 +90,6 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
 
         self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_fixture_node.return_value
+            nodes=self.mocked_fixtures_runner.return_value.get_fixture_node.return_value,
+            dry_run=False
         )

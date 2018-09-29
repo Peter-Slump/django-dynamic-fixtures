@@ -72,6 +72,17 @@ free to setup your fixture data in a way you like::
        def load(self):
            Author.objects.create(name="John Doe")
 
+
+List fixtures
+=============
+
+To list all existing fixtures you can call the management command `load_dynamic_fixtures` with an argument `--list`::
+
+  $ ./manage.py load_dynamic_fixtures --list
+
+The output may help to find out the reason why a fixture wasn't loaded.
+
+
 .. _load_fixtures:
 
 Load fixtures

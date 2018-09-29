@@ -19,6 +19,9 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
                 'dynamic_fixtures.fixtures.runner.Loader')
             self.graph_mock = self.setup_mock(
                 'dynamic_fixtures.fixtures.runner.Graph')
+            self.transaction_mock = self.setup_mock(
+                'dynamic_fixtures.fixtures.runner.transaction'
+            )
         except AttributeError:
             # Python 3.4.2 breaks on copying the __module__ when not available
             # on the mocked item.
@@ -218,11 +221,11 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
 
         call_back.assert_has_calls([
             mock.call('load_start', ('app_one', '0001_my_fixture')),
-            mock.call('load_success', ('app_one', '0001_my_fixture')),
+            mock.call('load_success', ('app_one', '0001_my_fixture'), mock.ANY),
             mock.call('load_start', ('app_one', '0002_my_other_fixture')),
-            mock.call('load_success', ('app_one', '0002_my_other_fixture')),
+            mock.call('load_success', ('app_one', '0002_my_other_fixture'), mock.ANY),
             mock.call('load_start', ('app_two', '0001_my_other_fixture')),
-            mock.call('load_success', ('app_two', '0001_my_other_fixture'))
+            mock.call('load_success', ('app_two', '0001_my_other_fixture'), mock.ANY)
         ])
 
     def test_load_fixtures_with_given_nodes(self):

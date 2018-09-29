@@ -1,7 +1,11 @@
+import time
+
+from django.db import transaction
+
 from dynamic_fixtures.fixtures.exceptions import (
     MultipleFixturesFound,
-    FixtureNotFound
-)
+    FixtureNotFound,
+    DryRun)
 from dynamic_fixtures.fixtures.loader import Loader, Graph
 
 
@@ -72,7 +76,7 @@ class LoadFixtureRunner(object):
                                   "'%s'" % (fixture_prefix, app_label))
         return nodes
 
-    def load_fixtures(self, nodes=None, progress_callback=None):
+    def load_fixtures(self, nodes=None, progress_callback=None, dry_run=False):
         """Load all fixtures for given nodes.
 
         If no nodes are given all fixtures will be loaded.
@@ -81,25 +85,44 @@ class LoadFixtureRunner(object):
                                            handling the nodes.
         """
 
-        fixture_count = 0
-
         if progress_callback and not callable(progress_callback):
             raise Exception('Callback should be callable')
 
-        # First retrieve a plan, e.g. a list of fixtures to be loaded sorted on
-        # dependency.
+        plan = self.get_plan(nodes=nodes)
+
+        try:
+            with transaction.atomic():
+                self.load_plan(plan=plan, progress_callback=progress_callback)
+                if dry_run:
+                    raise DryRun
+        except DryRun:
+            # Dry-run to get the atomic transaction rolled back
+            pass
+
+        return len(plan)
+
+    def load_plan(self, plan, progress_callback):
+        # Load every fixture in the plan.
+        for node in plan:
+            if progress_callback:
+                progress_callback('load_start', node)
+
+            start = time.time()
+            self.loader.disk_fixtures[node].load()
+            if progress_callback:
+                progress_callback('load_success', node, time.time() - start)
+
+    def get_plan(self, nodes=None):
+        """
+        Retrieve a plan, e.g. a list of fixtures to be loaded sorted on
+        dependency.
+
+        :param list nodes: list of nodes to be loaded.
+        :return:
+        """
         if nodes:
             plan = self.graph.resolve_nodes(nodes)
         else:
             plan = self.graph.resolve_node()
 
-        # Load every fixture in the plan.
-        for node in plan:
-            if progress_callback:
-                progress_callback('load_start', node)
-            self.loader.disk_fixtures[node].load()
-            if progress_callback:
-                progress_callback('load_success', node)
-            fixture_count += 1
-
-        return fixture_count
+        return plan
