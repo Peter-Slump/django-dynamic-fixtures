@@ -39,10 +39,21 @@ class Command(BaseCommand):
 
         self.stdout.write('Loaded {} fixtures'.format(fixture_count))
 
-    def progress_callback(self, action, node):
+    def progress_callback(self, action, node, elapsed_time=None):
+        """
+        Callback to report progress
+
+        :param str action:
+        :param list node: app, module
+        :param int | None elapsed_time:
+        """
         if action == 'load_start':
             self.stdout.write('Loading fixture {}.{}...'.format(*node),
                               ending='')
             self.stdout.flush()
         elif action == 'load_success':
-            self.stdout.write('SUCCESS')
+            message = 'SUCCESS'
+            if elapsed_time:
+                message += ' {:.03}s'.format(elapsed_time)
+
+            self.stdout.write(message)

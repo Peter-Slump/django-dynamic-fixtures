@@ -1,3 +1,5 @@
+import time
+
 from dynamic_fixtures.fixtures.exceptions import (
     MultipleFixturesFound,
     FixtureNotFound
@@ -97,9 +99,11 @@ class LoadFixtureRunner(object):
         for node in plan:
             if progress_callback:
                 progress_callback('load_start', node)
+
+            start = time.time()
             self.loader.disk_fixtures[node].load()
             if progress_callback:
-                progress_callback('load_success', node)
+                progress_callback('load_success', node, time.time() - start)
             fixture_count += 1
 
         return fixture_count
