@@ -221,11 +221,11 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
 
         call_back.assert_has_calls([
             mock.call('load_start', ('app_one', '0001_my_fixture')),
-            mock.call('load_success', ('app_one', '0001_my_fixture')),
+            mock.call('load_success', ('app_one', '0001_my_fixture'), mock.ANY),
             mock.call('load_start', ('app_one', '0002_my_other_fixture')),
-            mock.call('load_success', ('app_one', '0002_my_other_fixture')),
+            mock.call('load_success', ('app_one', '0002_my_other_fixture'), mock.ANY),
             mock.call('load_start', ('app_two', '0001_my_other_fixture')),
-            mock.call('load_success', ('app_two', '0001_my_other_fixture'))
+            mock.call('load_success', ('app_two', '0001_my_other_fixture'), mock.ANY)
         ])
 
     def test_load_fixtures_with_given_nodes(self):
