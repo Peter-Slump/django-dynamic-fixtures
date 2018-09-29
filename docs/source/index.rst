@@ -25,7 +25,7 @@ Features:
 Changelog
 =========
 
-**0.1.8**
+**0.2.0**
 
 * Added time elapsed per fixture
 * Dry-run mode
