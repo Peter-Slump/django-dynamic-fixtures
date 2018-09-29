@@ -113,6 +113,16 @@ Or load all fixtures for a given app::
 
    $ ./manage.py load_dynamic_fixtures my_app
 
+Dry-run
+=======
+
+You can test your fixtures in dry-run mode. Add the `--dry-run` argument to the
+management command. Fixtures will loaded as without dry-run enabled however the
+transaction will be rolled back at the end::
+
+  $ ./manage.py load_dynamic_fixtures --dry-run
+
+
 .. _dependencies:
 
 Dependencies
