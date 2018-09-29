@@ -19,6 +19,9 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
                 'dynamic_fixtures.fixtures.runner.Loader')
             self.graph_mock = self.setup_mock(
                 'dynamic_fixtures.fixtures.runner.Graph')
+            self.transaction_mock = self.setup_mock(
+                'dynamic_fixtures.fixtures.runner.transaction'
+            )
         except AttributeError:
             # Python 3.4.2 breaks on copying the __module__ when not available
             # on the mocked item.
