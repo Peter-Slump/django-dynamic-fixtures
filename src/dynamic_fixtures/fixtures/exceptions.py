@@ -8,3 +8,7 @@ class MultipleFixturesFound(Exception):
 
 class FixtureNotFound(Exception):
     pass
+
+
+class DryRun(Exception):
+    pass
