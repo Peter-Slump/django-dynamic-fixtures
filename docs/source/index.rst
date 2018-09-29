@@ -22,6 +22,15 @@ Features:
   - :ref:`load_fixtures` which are required for your task;
   - Manage fixture :ref:`dependencies`.
 
+Changelog
+=========
+
+**0.1.8**
+
+* Added time elapsed per fixture
+* Dry-run mode
+* List available fixtures
+* Run all fixtures in an transaction
 
 Installation
 ============
