@@ -25,6 +25,11 @@ Features:
 Changelog
 =========
 
+**0.2.1**
+
+* Added some docs about dry-run mode
+* Fixed Django versions in setup.py
+
 **0.2.0**
 
 * Added time elapsed per fixture
