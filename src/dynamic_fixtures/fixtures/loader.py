@@ -1,11 +1,12 @@
 import os
+import logging
 
 from importlib import import_module
 
 from django.apps import apps
 
-from dynamic_fixtures.fixtures.exceptions import BadFixtureError
 
+logger = logging.getLogger(__name__)
 FIXTURES_MODULE_NAME = 'fixtures'
 
 
@@ -26,7 +27,7 @@ class Loader(object):
         for app_config in apps.get_app_configs():
             # No models no need for fixtures
             if app_config.models_module is None:
-                continue
+                logger.info("No models found for {}".format(app_config.label))
 
             self.handle_app_config(app_config=app_config)
 
@@ -47,9 +48,11 @@ class Loader(object):
             fixture_module = import_module("%s.%s" % (module_name,
                                                       fixture_name))
             if not hasattr(fixture_module, "Fixture"):
-                raise BadFixtureError(
+                logger.error(
                     "Fixture %s in app %s has no Fixture class" % (
-                        fixture_name, app_config.label))
+                        fixture_name, app_config.label
+                    ))
+                continue
             self.disk_fixtures[
                 app_config.label, fixture_name
             ] = fixture_module.Fixture(fixture_name, app_config.label)
