@@ -38,23 +38,41 @@ class FixturesLoaderTestCase(TestCase):
             self.assertIsInstance(fixture, BaseFixture)
 
     @override_settings(INSTALLED_APPS=['app_broken_fixture'])
-    def test_no_fixture_class(self):
+    @mock.patch('dynamic_fixtures.fixtures.loader.logger')
+    def test_no_fixture_class(self, logger_mock):
         """
         Case: A app with a fixture file without fixture class get loaded
-        Expected: An error get raised that the fixture class is not available.
+        Expected: An error is logged that the fixture class is not available.
         """
-        with self.assertRaises(BadFixtureError):
-            self.loader.load_disk()
+        self.loader.load_disk()
+
+        self.assertEqual(
+            logger_mock.error.mock_calls,
+            [mock.call(
+                "Fixture {} in app {} has no Fixture class".format(
+                    '003_empty_fixture', 'app_broken_fixture'
+                )
+            )]
+        )
 
     @override_settings(INSTALLED_APPS=['app_wrong_fixture_class'])
-    def test_wrong_fixture_class_name(self):
+    @mock.patch('dynamic_fixtures.fixtures.loader.logger')
+    def test_wrong_fixture_class_name(self, logger_mock):
         """
         Case: An app get loaded with a fixture file containing a wrongly named
               fixture class.
-        Expected: An error get raised that the fixture class is not available.
+        Expected: An error is logged that the fixture class is not available.
         """
-        with self.assertRaises(BadFixtureError):
-            self.loader.load_disk()
+        self.loader.load_disk()
+
+        self.assertEqual(
+            logger_mock.error.mock_calls,
+            [mock.call(
+                "Fixture {} in app {} has no Fixture class".format(
+                    '003_wrong_fixture_class', 'app_wrong_fixture_class'
+                )
+            )]
+        )
 
     @override_settings(INSTALLED_APPS=['app_no_fixtures'])
     def test_no_fixture(self):
