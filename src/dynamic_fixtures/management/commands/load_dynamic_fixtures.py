@@ -37,8 +37,7 @@ class Command(BaseCommand):
         elif fixture_name is None:
             nodes = runner.get_app_nodes(app_label=app_label)
         else:
-            nodes = runner.get_fixture_node(app_label=app_label,
-                                            fixture_prefix=fixture_name)
+            nodes = runner.get_fixture_node(app_label=app_label, fixture_prefix=fixture_name)
 
         if options.get('verbosity') > 1:
             logger.setLevel(logging.DEBUG)
