@@ -1,6 +1,4 @@
-from unittest import TestCase
-
-from unittest import mock
+from unittest import TestCase, mock
 
 from dynamic_fixtures.fixtures.exceptions import FixtureNotFound, MultipleFixturesFound
 from dynamic_fixtures.fixtures.loader import Graph

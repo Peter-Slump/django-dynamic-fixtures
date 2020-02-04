@@ -1,10 +1,9 @@
-import sys
 import os
+import sys
+from unittest import mock
 
 from django.test.testcases import TestCase
 from django.test.utils import override_settings
-
-from unittest import mock
 
 from dynamic_fixtures.fixtures.exceptions import BadFixtureError
 from dynamic_fixtures.fixtures.loader import Loader

@@ -1,10 +1,8 @@
-import os
 import logging
-
+import os
 from importlib import import_module
 
 from django.apps import apps
-
 
 logger = logging.getLogger(__name__)
 FIXTURES_MODULE_NAME = "fixtures"

@@ -3,11 +3,11 @@ import time
 from django.db import transaction
 
 from dynamic_fixtures.fixtures.exceptions import (
-    MultipleFixturesFound,
-    FixtureNotFound,
     DryRun,
+    FixtureNotFound,
+    MultipleFixturesFound,
 )
-from dynamic_fixtures.fixtures.loader import Loader, Graph
+from dynamic_fixtures.fixtures.loader import Graph, Loader
 
 
 class LoadFixtureRunner(object):

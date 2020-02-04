@@ -1,8 +1,8 @@
 import logging
+
 from django.core.management.base import BaseCommand
 
 from dynamic_fixtures.fixtures.runner import LoadFixtureRunner
-
 
 logger = logging.getLogger(__name__)
 
