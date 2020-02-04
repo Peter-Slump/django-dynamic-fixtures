@@ -1,7 +1,6 @@
 import time
 
 from django.db import transaction
-
 from dynamic_fixtures.fixtures.exceptions import (
     DryRun,
     FixtureNotFound,
