@@ -7,18 +7,17 @@ from django.apps import apps
 
 
 logger = logging.getLogger(__name__)
-FIXTURES_MODULE_NAME = 'fixtures'
+FIXTURES_MODULE_NAME = "fixtures"
 
 
 class Loader(object):
-
     def __init__(self):
         self.disk_fixtures = None
 
     @classmethod
     def fixtures_module(cls, app_label):
         app_package_name = apps.get_app_config(app_label).name
-        return '%s.%s' % (app_package_name, FIXTURES_MODULE_NAME)
+        return "%s.%s" % (app_package_name, FIXTURES_MODULE_NAME)
 
     def load_disk(self):
 
@@ -45,17 +44,16 @@ class Loader(object):
 
         # Load them
         for fixture_name in fixture_names:
-            fixture_module = import_module("%s.%s" % (module_name,
-                                                      fixture_name))
+            fixture_module = import_module("%s.%s" % (module_name, fixture_name))
             if not hasattr(fixture_module, "Fixture"):
                 logger.error(
-                    "Fixture %s in app %s has no Fixture class" % (
-                        fixture_name, app_config.label
-                    ))
+                    "Fixture %s in app %s has no Fixture class"
+                    % (fixture_name, app_config.label)
+                )
                 continue
-            self.disk_fixtures[
-                app_config.label, fixture_name
-            ] = fixture_module.Fixture(fixture_name, app_config.label)
+            self.disk_fixtures[app_config.label, fixture_name] = fixture_module.Fixture(
+                fixture_name, app_config.label
+            )
 
     @staticmethod
     def get_fixture_files(directory):
@@ -104,12 +102,11 @@ class Graph(object):
 
     def add_dependency(self, node, dependency):
         if node not in self._nodes:
-            raise KeyError('Node %s not set', str(node))
+            raise KeyError("Node %s not set", str(node))
         if dependency not in self._nodes:
             raise KeyError(
-                'Dependency "%s" required for "%s" but is not set.' % (
-                    str(dependency), str(node)
-                )
+                'Dependency "%s" required for "%s" but is not set.'
+                % (str(dependency), str(node))
             )
         self._nodes[node].append(dependency)
 
@@ -153,8 +150,9 @@ class Graph(object):
             if dependency in resolved:
                 continue
             if dependency in seen:
-                raise Exception('Circular dependency %s > %s', str(node),
-                                str(dependency))
+                raise Exception(
+                    "Circular dependency %s > %s", str(node), str(dependency)
+                )
             self.resolve_node(dependency, resolved, seen)
         if node is not None:
             resolved.append(node)

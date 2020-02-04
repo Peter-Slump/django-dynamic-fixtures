@@ -2,7 +2,6 @@ from unittest import mock
 
 
 class MockTestCaseMixin(object):
-
     def __init__(self, *args, **kwargs):
         self._mocks = {}
 
@@ -10,7 +9,7 @@ class MockTestCaseMixin(object):
 
     def setup_mock(self, target, autospec=True, **kwargs):
         if target in self._mocks:
-            raise Exception('Target %s already patched', target)
+            raise Exception("Target %s already patched", target)
 
         self._mocks[target] = mock.patch(target, autospec=autospec, **kwargs)
 

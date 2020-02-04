@@ -2,25 +2,21 @@ from unittest import TestCase
 
 from unittest import mock
 
-from dynamic_fixtures.fixtures.exceptions import (
-    FixtureNotFound,
-    MultipleFixturesFound
-)
+from dynamic_fixtures.fixtures.exceptions import FixtureNotFound, MultipleFixturesFound
 from dynamic_fixtures.fixtures.loader import Graph
 from dynamic_fixtures.fixtures.runner import LoadFixtureRunner
 from tests.mixins import MockTestCaseMixin
 
 
 class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
-
     def setUp(self):
         try:
             self.loader_mock = self.setup_mock(
-                'dynamic_fixtures.fixtures.runner.Loader')
-            self.graph_mock = self.setup_mock(
-                'dynamic_fixtures.fixtures.runner.Graph')
+                "dynamic_fixtures.fixtures.runner.Loader"
+            )
+            self.graph_mock = self.setup_mock("dynamic_fixtures.fixtures.runner.Graph")
             self.transaction_mock = self.setup_mock(
-                'dynamic_fixtures.fixtures.runner.transaction'
+                "dynamic_fixtures.fixtures.runner.transaction"
             )
         except AttributeError:
             # Python 3.4.2 breaks on copying the __module__ when not available
@@ -47,27 +43,24 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         loader = LoadFixtureRunner()
 
         fixture_mock = mock.MagicMock()
-        fixture_mock.dependencies = ['b', 'c']
+        fixture_mock.dependencies = ["b", "c"]
 
         self.loader_mock.return_value.disk_fixtures = {
-            'a': fixture_mock,
-            'b': mock.MagicMock(),
-            'c': mock.MagicMock()
+            "a": fixture_mock,
+            "b": mock.MagicMock(),
+            "c": mock.MagicMock(),
         }
 
         self.assertFalse(self.graph_mock.called)
         graph = loader.graph
         self.assertIsInstance(graph, Graph)
         self.graph_mock.assert_called_once_with()
-        self.graph_mock.return_value.add_node.assert_has_calls([
-            mock.call('a'),
-            mock.call('b'),
-            mock.call('c')
-        ], any_order=True)
-        self.graph_mock.return_value.add_dependency.assert_has_calls([
-            mock.call('a', 'b'),
-            mock.call('a', 'c')
-        ])
+        self.graph_mock.return_value.add_node.assert_has_calls(
+            [mock.call("a"), mock.call("b"), mock.call("c")], any_order=True
+        )
+        self.graph_mock.return_value.add_dependency.assert_has_calls(
+            [mock.call("a", "b"), mock.call("a", "c")]
+        )
         # Retrieve graph for the 2nd time.
         graph = loader.graph
         self.assertIsInstance(graph, Graph)
@@ -83,20 +76,14 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
 
         graph = self.graph_mock()
         graph.nodes = [
-            ('app_one', 'foo'),
-            ('app_one', 'bar'),
-            ('app_two', 'foo'),
+            ("app_one", "foo"),
+            ("app_one", "bar"),
+            ("app_two", "foo"),
         ]
         runner._graph = graph
 
-        app_nodes = runner.get_app_nodes('app_one')
-        self.assertListEqual(
-            app_nodes,
-            [
-                ('app_one', 'foo'),
-                ('app_one', 'bar'),
-            ]
-        )
+        app_nodes = runner.get_app_nodes("app_one")
+        self.assertListEqual(app_nodes, [("app_one", "foo"), ("app_one", "bar"),])
 
     def test_get_fixture_nodes(self):
         """
@@ -105,16 +92,17 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         """
 
         runner = LoadFixtureRunner()
-        runner.get_app_nodes = mock.MagicMock(return_value=[
-            ('app_one', '0001_my_fixture'),
-            ('app_one', '0002_my_other_fixture'),
-            ('app_one', '0003_my_other_fixture'),
-        ])
+        runner.get_app_nodes = mock.MagicMock(
+            return_value=[
+                ("app_one", "0001_my_fixture"),
+                ("app_one", "0002_my_other_fixture"),
+                ("app_one", "0003_my_other_fixture"),
+            ]
+        )
 
-        result = runner.get_fixture_node(app_label='app_one',
-                                         fixture_prefix='0001')
-        self.assertListEqual(result, [('app_one', '0001_my_fixture')])
-        runner.get_app_nodes.assert_called_once_with(app_label='app_one')
+        result = runner.get_fixture_node(app_label="app_one", fixture_prefix="0001")
+        self.assertListEqual(result, [("app_one", "0001_my_fixture")])
+        runner.get_app_nodes.assert_called_once_with(app_label="app_one")
 
     def test_get_fixture_nodes_none_returned(self):
         """
@@ -122,19 +110,20 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         Expected: An error get raised
         """
         runner = LoadFixtureRunner()
-        runner.get_app_nodes = mock.MagicMock(return_value=[
-            ('app_one', '0001_my_fixture'),
-            ('app_one', '0002_my_other_fixture'),
-            ('app_one', '0003_my_other_fixture'),
-        ])
+        runner.get_app_nodes = mock.MagicMock(
+            return_value=[
+                ("app_one", "0001_my_fixture"),
+                ("app_one", "0002_my_other_fixture"),
+                ("app_one", "0003_my_other_fixture"),
+            ]
+        )
 
         with self.assertRaises(FixtureNotFound) as e:
-            runner.get_fixture_node(app_label='app_one',
-                                    fixture_prefix='0006')
+            runner.get_fixture_node(app_label="app_one", fixture_prefix="0006")
 
-        self.assertEqual("Fixture with prefix '0006' not found in app "
-                         "'app_one'",
-                         str(e.exception))
+        self.assertEqual(
+            "Fixture with prefix '0006' not found in app " "'app_one'", str(e.exception)
+        )
 
     def test_get_fixture_nodes_multiple_returned(self):
         """
@@ -142,20 +131,23 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         Expected: An error get raised
         """
         runner = LoadFixtureRunner()
-        runner.get_app_nodes = mock.MagicMock(return_value=[
-            ('app_one', '0001_my_fixture'),
-            ('app_one', '0001_my_other_fixture'),
-            ('app_one', '0003_my_other_fixture'),
-        ])
+        runner.get_app_nodes = mock.MagicMock(
+            return_value=[
+                ("app_one", "0001_my_fixture"),
+                ("app_one", "0001_my_other_fixture"),
+                ("app_one", "0003_my_other_fixture"),
+            ]
+        )
 
         with self.assertRaises(MultipleFixturesFound) as e:
-            runner.get_fixture_node(app_label='app_one',
-                                    fixture_prefix='0001')
+            runner.get_fixture_node(app_label="app_one", fixture_prefix="0001")
 
-        self.assertEqual("The following fixtures with prefix '0001' are found"
-                         " in app 'app_one': 0001_my_fixture, "
-                         "0001_my_other_fixture",
-                         str(e.exception))
+        self.assertEqual(
+            "The following fixtures with prefix '0001' are found"
+            " in app 'app_one': 0001_my_fixture, "
+            "0001_my_other_fixture",
+            str(e.exception),
+        )
 
     def test_load_fixtures_return_value_two_fixtures(self):
         """
@@ -166,13 +158,13 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         runner = LoadFixtureRunner()
         runner._graph = self.graph_mock()
         runner._graph.resolve_node.return_value = [
-            ('app_one', '0001_my_fixture'),
-            ('app_one', '0002_my_other_fixture'),
+            ("app_one", "0001_my_fixture"),
+            ("app_one", "0002_my_other_fixture"),
         ]
         runner.loader = self.loader_mock()
         runner.loader.disk_fixtures = {
-            ('app_one', '0001_my_fixture'): mock.MagicMock(),
-            ('app_one', '0002_my_other_fixture'): mock.MagicMock()
+            ("app_one", "0001_my_fixture"): mock.MagicMock(),
+            ("app_one", "0002_my_other_fixture"): mock.MagicMock(),
         }
 
         self.assertEqual(runner.load_fixtures(), 2)
@@ -200,15 +192,15 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         runner = LoadFixtureRunner()
         runner._graph = self.graph_mock()
         runner._graph.resolve_node.return_value = [
-            ('app_one', '0001_my_fixture'),
-            ('app_one', '0002_my_other_fixture'),
-            ('app_two', '0001_my_other_fixture'),
+            ("app_one", "0001_my_fixture"),
+            ("app_one", "0002_my_other_fixture"),
+            ("app_two", "0001_my_other_fixture"),
         ]
         runner.loader = self.loader_mock()
         runner.loader.disk_fixtures = {
-            ('app_one', '0001_my_fixture'): mock.MagicMock(),
-            ('app_one', '0002_my_other_fixture'): mock.MagicMock(),
-            ('app_two', '0001_my_other_fixture'): mock.MagicMock()
+            ("app_one", "0001_my_fixture"): mock.MagicMock(),
+            ("app_one", "0002_my_other_fixture"): mock.MagicMock(),
+            ("app_two", "0001_my_other_fixture"): mock.MagicMock(),
         }
 
         call_back = mock.Mock(return_value=None)
@@ -219,14 +211,20 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         for fixture_mock in runner.loader.disk_fixtures.values():
             fixture_mock.load.assert_called_once_with()
 
-        call_back.assert_has_calls([
-            mock.call('load_start', ('app_one', '0001_my_fixture')),
-            mock.call('load_success', ('app_one', '0001_my_fixture'), mock.ANY),
-            mock.call('load_start', ('app_one', '0002_my_other_fixture')),
-            mock.call('load_success', ('app_one', '0002_my_other_fixture'), mock.ANY),
-            mock.call('load_start', ('app_two', '0001_my_other_fixture')),
-            mock.call('load_success', ('app_two', '0001_my_other_fixture'), mock.ANY)
-        ])
+        call_back.assert_has_calls(
+            [
+                mock.call("load_start", ("app_one", "0001_my_fixture")),
+                mock.call("load_success", ("app_one", "0001_my_fixture"), mock.ANY),
+                mock.call("load_start", ("app_one", "0002_my_other_fixture")),
+                mock.call(
+                    "load_success", ("app_one", "0002_my_other_fixture"), mock.ANY
+                ),
+                mock.call("load_start", ("app_two", "0001_my_other_fixture")),
+                mock.call(
+                    "load_success", ("app_two", "0001_my_other_fixture"), mock.ANY
+                ),
+            ]
+        )
 
     def test_load_fixtures_with_given_nodes(self):
         """
@@ -237,26 +235,31 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         runner = LoadFixtureRunner()
         runner._graph = self.graph_mock()
         runner._graph.resolve_nodes.return_value = [
-            ('app_one', '0001_my_fixture'),
-            ('app_one', '0002_my_other_fixture'),
+            ("app_one", "0001_my_fixture"),
+            ("app_one", "0002_my_other_fixture"),
         ]
         runner.loader = self.loader_mock()
         runner.loader.disk_fixtures = {
-            ('app_one', '0001_my_fixture'): mock.MagicMock(),
-            ('app_one', '0002_my_other_fixture'): mock.MagicMock(),
-            ('app_two', '0001_my_other_fixture'): mock.MagicMock()
+            ("app_one", "0001_my_fixture"): mock.MagicMock(),
+            ("app_one", "0002_my_other_fixture"): mock.MagicMock(),
+            ("app_two", "0001_my_other_fixture"): mock.MagicMock(),
         }
 
-        runner.load_fixtures(nodes=[('app_one', '0001_my_fixture'),
-                                    ('app_one', '0002_my_other_fixture')])
+        runner.load_fixtures(
+            nodes=[("app_one", "0001_my_fixture"), ("app_one", "0002_my_other_fixture")]
+        )
 
-        runner.graph.resolve_nodes.assert_called_once_with([
-            ('app_one', '0001_my_fixture'),
-            ('app_one', '0002_my_other_fixture')
-        ])
+        runner.graph.resolve_nodes.assert_called_once_with(
+            [("app_one", "0001_my_fixture"), ("app_one", "0002_my_other_fixture")]
+        )
         runner.loader.disk_fixtures[
-            ('app_one', '0001_my_fixture')].load.assert_called_once_with()
+            ("app_one", "0001_my_fixture")
+        ].load.assert_called_once_with()
         runner.loader.disk_fixtures[
-            ('app_one', '0002_my_other_fixture')].load.assert_called_once_with()
-        self.assertFalse(runner.loader.disk_fixtures[
-                             ('app_two', '0001_my_other_fixture')].load.called)
+            ("app_one", "0002_my_other_fixture")
+        ].load.assert_called_once_with()
+        self.assertFalse(
+            runner.loader.disk_fixtures[
+                ("app_two", "0001_my_other_fixture")
+            ].load.called
+        )

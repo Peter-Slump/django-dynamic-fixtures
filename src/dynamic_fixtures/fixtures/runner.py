@@ -5,12 +5,12 @@ from django.db import transaction
 from dynamic_fixtures.fixtures.exceptions import (
     MultipleFixturesFound,
     FixtureNotFound,
-    DryRun)
+    DryRun,
+)
 from dynamic_fixtures.fixtures.loader import Loader, Graph
 
 
 class LoadFixtureRunner(object):
-
     def __init__(self):
         self.loader = Loader()
         self.loader.load_disk()
@@ -58,22 +58,19 @@ class LoadFixtureRunner(object):
         :return: list of found fixtures.
         """
         app_nodes = self.get_app_nodes(app_label=app_label)
-        nodes = [
-            node for node in app_nodes if node[1].startswith(fixture_prefix)
-            ]
+        nodes = [node for node in app_nodes if node[1].startswith(fixture_prefix)]
 
         if len(nodes) > 1:
             raise MultipleFixturesFound(
                 "The following fixtures with prefix '%s' are found in app '%s'"
-                ": %s" % (
-                    fixture_prefix, app_label, ', '.join(
-                        [node[1] for node in nodes]
-                    )
-                )
+                ": %s"
+                % (fixture_prefix, app_label, ", ".join([node[1] for node in nodes]))
             )
         elif len(nodes) == 0:
-            raise FixtureNotFound("Fixture with prefix '%s' not found in app "
-                                  "'%s'" % (fixture_prefix, app_label))
+            raise FixtureNotFound(
+                "Fixture with prefix '%s' not found in app "
+                "'%s'" % (fixture_prefix, app_label)
+            )
         return nodes
 
     def load_fixtures(self, nodes=None, progress_callback=None, dry_run=False):
@@ -86,7 +83,7 @@ class LoadFixtureRunner(object):
         """
 
         if progress_callback and not callable(progress_callback):
-            raise Exception('Callback should be callable')
+            raise Exception("Callback should be callable")
 
         plan = self.get_plan(nodes=nodes)
 
@@ -105,12 +102,12 @@ class LoadFixtureRunner(object):
         # Load every fixture in the plan.
         for node in plan:
             if progress_callback:
-                progress_callback('load_start', node)
+                progress_callback("load_start", node)
 
             start = time.time()
             self.loader.disk_fixtures[node].load()
             if progress_callback:
-                progress_callback('load_success', node, time.time() - start)
+                progress_callback("load_success", node, time.time() - start)
 
     def get_plan(self, nodes=None):
         """
