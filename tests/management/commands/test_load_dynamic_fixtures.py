@@ -8,8 +8,9 @@ from tests.mixins import MockTestCaseMixin
 
 class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
     def setUp(self):
-        self.mocked_fixtures_runner = self.setup_mock(
-            "dynamic_fixtures.management.commands.load_dynamic_fixtures.LoadFixtureRunner"
+        self.fixtures_runner_mock = self.setup_mock(
+            "dynamic_fixtures.management.commands.load_dynamic_fixtures"
+            ".LoadFixtureRunner"
         )
 
     def test_service_got_called(self):
@@ -19,10 +20,10 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
         """
         call_command("load_dynamic_fixtures")
 
-        self.mocked_fixtures_runner.assert_called_once_with()
-        self.assertFalse(self.mocked_fixtures_runner.return_value.get_app_nodes.called)
+        self.fixtures_runner_mock.assert_called_once_with()
+        self.assertFalse(self.fixtures_runner_mock.return_value.get_app_nodes.called)
 
-        self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
+        self.fixtures_runner_mock.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY, nodes=None, dry_run=False
         )
 
@@ -33,14 +34,14 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
         """
         call_command("load_dynamic_fixtures", "my_app")
 
-        self.mocked_fixtures_runner.assert_called_once_with()
-        self.mocked_fixtures_runner.return_value.get_app_nodes.assert_called_once_with(
+        self.fixtures_runner_mock.assert_called_once_with()
+        self.fixtures_runner_mock.return_value.get_app_nodes.assert_called_once_with(
             app_label="my_app"
         )
 
-        self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
+        self.fixtures_runner_mock.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_app_nodes.return_value,
+            nodes=self.fixtures_runner_mock.return_value.get_app_nodes.return_value,
             dry_run=False,
         )
 
@@ -51,14 +52,14 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
         """
         call_command("load_dynamic_fixtures", "my_app", "0001")
 
-        self.mocked_fixtures_runner.assert_called_once_with()
-        self.mocked_fixtures_runner.return_value.get_fixture_node.assert_called_once_with(
+        self.fixtures_runner_mock.assert_called_once_with()
+        self.fixtures_runner_mock.return_value.get_fixture_node.assert_called_once_with(
             app_label="my_app", fixture_prefix="0001"
         )
 
-        self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
+        self.fixtures_runner_mock.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_fixture_node.return_value,
+            nodes=self.fixtures_runner_mock.return_value.get_fixture_node.return_value,
             dry_run=False,
         )
 
@@ -69,14 +70,14 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
         """
         call_command("load_dynamic_fixtures", app_label="my_app")
 
-        self.mocked_fixtures_runner.assert_called_once_with()
-        self.mocked_fixtures_runner.return_value.get_app_nodes.assert_called_once_with(
+        self.fixtures_runner_mock.assert_called_once_with()
+        self.fixtures_runner_mock.return_value.get_app_nodes.assert_called_once_with(
             app_label="my_app"
         )
 
-        self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
+        self.fixtures_runner_mock.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_app_nodes.return_value,
+            nodes=self.fixtures_runner_mock.return_value.get_app_nodes.return_value,
             dry_run=False,
         )
 
@@ -87,13 +88,13 @@ class ManagementCommandLoadDynamicFixturesTestCase(MockTestCaseMixin, TestCase):
         """
         call_command("load_dynamic_fixtures", app_label="my_app", fixture_name="0001")
 
-        self.mocked_fixtures_runner.assert_called_once_with()
-        self.mocked_fixtures_runner.return_value.get_fixture_node.assert_called_once_with(
+        self.fixtures_runner_mock.assert_called_once_with()
+        self.fixtures_runner_mock.return_value.get_fixture_node.assert_called_once_with(
             app_label="my_app", fixture_prefix="0001"
         )
 
-        self.mocked_fixtures_runner.return_value.load_fixtures.assert_called_once_with(
+        self.fixtures_runner_mock.return_value.load_fixtures.assert_called_once_with(
             progress_callback=mock.ANY,
-            nodes=self.mocked_fixtures_runner.return_value.get_fixture_node.return_value,
+            nodes=self.fixtures_runner_mock.return_value.get_fixture_node.return_value,
             dry_run=False,
         )

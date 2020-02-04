@@ -5,7 +5,6 @@ from unittest import mock
 from django.test.testcases import TestCase
 from django.test.utils import override_settings
 
-from dynamic_fixtures.fixtures.exceptions import BadFixtureError
 from dynamic_fixtures.fixtures.loader import Loader
 
 # Make sure the test apps can be imported

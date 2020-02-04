@@ -81,7 +81,7 @@ class LoadFixtureRunnerTestCase(MockTestCaseMixin, TestCase):
         runner._graph = graph
 
         app_nodes = runner.get_app_nodes("app_one")
-        self.assertListEqual(app_nodes, [("app_one", "foo"), ("app_one", "bar"),])
+        self.assertListEqual(app_nodes, [("app_one", "foo"), ("app_one", "bar")])
 
     def test_get_fixture_nodes(self):
         """
