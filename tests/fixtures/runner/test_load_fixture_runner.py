@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-import mock
+from unittest import mock
 
 from dynamic_fixtures.fixtures.exceptions import (
     FixtureNotFound,

@@ -30,12 +30,12 @@ setup(
         'pytest-runner'
     ],
     install_requires=[
-        'Django>=1.7'
+        'Django>=1.11'
     ],
     tests_require=[
         'pytest-django',
         'pytest-cov',
-        'mock>=2.0',
+        'pytest-pythonpath'
     ],
     url='https://github.com/Peter-Slump/django-dynamic-fixtures',
     license='MIT',
@@ -45,17 +45,16 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
-        'Framework :: Django :: 1.8',
-        'Framework :: Django :: 1.9',
-        'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
-        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.2',
+        'Framework :: Django :: 3.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Software Development :: Testing',
     ]
 

@@ -4,7 +4,7 @@ import os
 from django.test.testcases import TestCase
 from django.test.utils import override_settings
 
-import mock
+from unittest import mock
 
 from dynamic_fixtures.fixtures.exceptions import BadFixtureError
 from dynamic_fixtures.fixtures.loader import Loader
