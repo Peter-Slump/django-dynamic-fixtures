@@ -74,7 +74,7 @@ already know from the `Django migrations <https://docs.djangoproject.com/en/1.7/
 Inside the fixture file you have to create a class called `Fixture`. This
 class should extend from :class:`dynamic_fixtures.fixtures.basefixture.BaseFixture`.
 
-In this class you define at least the `load`-method. In this method your are
+In this class you define at least the `load`-method. In this method you are
 free to setup your fixture data in a way you like::
 
    #my_django_project/my_app/fixtures/0001_create_example_author.py
